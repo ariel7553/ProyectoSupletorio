@@ -1,0 +1,73 @@
+﻿@model FacturacionWeb.Models.UserModel
+@{
+    Layout = null;
+    ViewBag.Title = "Login";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="@Url.Content("~/assets/css/bootstrap.css")">
+    <link rel="stylesheet" href="@Url.Content("~/assets/vendors/bootstrap-icons/bootstrap-icons.css")">
+    <link rel="stylesheet" href="@Url.Content("~/assets/css/app.css")">
+    <link rel="stylesheet" href="@Url.Content("~/assets/css/pages/auth.css")">
+</head>
+<body>
+
+
+    <div id="auth">
+
+        <div class="row h-100">
+            <div class="col-lg-3 col-sm-4">
+
+            </div>
+            <div class="col-lg-7 d-lg-block col-12">
+                <div id="auth-left">
+                    <div class="auth-logo">
+                        <a><img src="@Url.Content("~/assets/images/logo/uta.jpg")" alt="Logo"></a>
+                    </div>
+                    <h3 style="color:darkred; text-align:center" class="auth-subtitle align-center">Iniciar Sesión</h3>
+
+                    @using (Html.BeginForm("Login", "Accounts", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationMessageFor(userModel => userModel.UserName, "", new { @class = "text-danger" })
+                        <br />
+                        @Html.ValidationMessageFor(userModel => userModel.UserPassword, "", new { @class = "text-danger" })
+                        <div class="form-group position-relative has-icon-left">
+                            @Html.TextBoxFor(userModel => userModel.UserName, new { placeholder = "Usuario", @class = "form-control form-control-xl" })
+                            <div class="form-control-icon">
+                                <i class="bi bi-person-circle"></i>
+                            </div>
+                        </div>
+                        <div class="form-group position-relative has-icon-left ">
+                            @Html.TextBoxFor(userModel => userModel.UserPassword, new { type = "password", placeholder = "Contraseña", @class = "form-control form-control-xl" })
+                            <div class="form-control-icon">
+                                <i class="bi bi-key-fill"></i>
+                            </div>
+                        </div>
+                        if (@ViewBag.Message != null)
+                        {
+                <div class="alert alert-danger">@ViewBag.Message.</div>
+                            
+                        }
+
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-success">Ingresar</button>
+                        </div>
+
+                    }
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>

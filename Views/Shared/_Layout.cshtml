@@ -1,0 +1,165 @@
+﻿
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Facturación</title>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="@Url.Content("~/assets/css/bootstrap.css")">
+
+    <link rel="stylesheet" href="@Url.Content("~/assets/vendors/iconly/bold.css")">
+
+    <link rel="stylesheet" href="@Url.Content("~/assets/vendors/perfect-scrollbar/perfect-scrollbar.css")">
+    <link rel="stylesheet" href="@Url.Content("~/assets/vendors/bootstrap-icons/bootstrap-icons.css")">
+    <link rel="stylesheet" href="@Url.Content("~/assets/css/app.css")">
+
+    <link rel="stylesheet" href="@Url.Content("~/assets/vendors/toastify/toastify.css")">
+
+    <script src="@Url.Content("~/assets/vendors/jquery/jquery.min.js")"></script>
+    <link href="@Url.Content("~/assets/vendors/sweetalert2/sweetalert2.css")" rel="stylesheet" />
+    <script src="@Url.Content("~/assets/vendors/sweetalert2/sweetalert2.js")"></script>
+    @*<script src="@Url.Content("~/assets/js/JQuery.3.6.js")"></script>*@
+
+
+    <link rel="stylesheet" href="@Url.Content("~/assets/vendors/jquery-datatables/jquery.dataTables.bootstrap5.min.css")">
+    <link rel="stylesheet" href="@Url.Content("~/assets/vendors/fontawesome/all.min.css")">
+
+    <script src="@Url.Content("~/assets/vendors/jquery-datatables/jquery.dataTables.min.js")"></script>
+    <script src="@Url.Content("~/assets/vendors/jquery-datatables/custom.jquery.dataTables.bootstrap5.min.js")"></script>
+    <script src="@Url.Content("~/assets/vendors/fontawesome/all.min.js")"></script>
+    <script src="@Url.Content("~/assets/vendors/toastify/toastify.js")"></script>
+
+    <script src="@Url.Content("~/assets/js/extensions/CustomSweet.js")"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js" integrity="sha512-pHVGpX7F/27yZ0ISY+VVjyULApbDlD0/X0rgGbTqCE7WFW5MezNTWG/dnhtbBuICzsd0WQPgpE4REBLv+UqChw==" crossorigin="anonymous"></script>
+   
+    @*<link rel="stylesheet" href="@Url.Content("~/assets/vendors/simple-datatables/style.css")">
+
+        <script src="@Url.Content("~/assets/vendors/simple-datatables/simple-datatables.js")"></script>*@
+
+</head>
+
+<body>
+    <div id="app">
+        <div id="sidebar" class="active">
+            <div class="sidebar-wrapper active">
+                <div class="sidebar-header">
+                    <div class="d-flex justify-content-between">
+                        <div class="logo">
+                            <a href=""><img src="@Url.Content("~/assets/images/logo/uta.jpg")" alt="Logo" srcset=""></a>
+                        </div>
+                        <div class="toggler">
+                            <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="sidebar-menu">
+                    <ul class="menu" id="UsuarioMenu">
+                    
+
+                    </ul>
+                </div>
+                <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
+            </div>
+        </div>
+        <div id="main">
+            <header class="mb-3">
+                <a href="#" class="burger-btn d-block d-xl-none">
+                    <i class="bi bi-justify fs-3"></i>
+                </a>
+                <div class="float-end">
+                    <div class="dropdown">
+                        <a href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                            <div class="user-menu d-flex">
+                                <div class="user-name text-end me-3">
+                                    <h6 class="mb-0 text-gray-600">@User.Identity.Name</h6>
+                                    
+                                </div>
+                                <div class="user-img d-flex align-items-center">
+                                    <div class="avatar avatar-md">
+                                        <img src="@Url.Content("~/assets/images/faces/9.jpg")">
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton" style="min-width: 11rem;">
+                            <li>
+                               
+                                <h6 class="dropdown-header">Hola, @User.Identity.Name</h6>
+                            </li>
+
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="@Url.Action("Logout","Accounts")"><i class="icon-mid bi bi-box-arrow-left me-2"></i>Salir</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </header>
+
+            @RenderBody()
+
+
+            <footer>
+                <div class="footer clearfix mb-0 text-muted">
+
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <script src="@Url.Content("~/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js")"></script>
+    <script src="@Url.Content("~/assets/js/bootstrap.bundle.min.js")"></script>
+
+ 
+    <script src="@Url.Content("~/assets/js/mazer.js")"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+        $.ajax({
+            method: "POST",
+            url: "@Url.Content("~/Principal/UsuarioMenu")",
+            dataType: 'json',
+            data: {
+                'Usuario': "@User.Identity.Name"
+            },
+            success: function (data) {
+                if (data.Status != 200) {
+                    alertMessage("Código; " + data.Status + ": " + data.Error, "Error Obtener Menú del Usuario", "error");
+                } else {
+                    var controllerName = '@HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString()';
+                                       
+                    for (var i = 0; i < data.Data.length; i++) {
+                        var item = data.Data[i];
+                        var object = "";
+                        if (item.Path == controllerName) {
+                            object += `<li class= "sidebar-item active">`;
+                        } else {
+                            object += `<li class= "sidebar-item ">`
+                        }
+                        object += `<a href="@Url.Content("~/${item.Path}/Index")" class='sidebar-link'>`;
+                        object += ` <i class="${item.Icono}"></i><span>${item.NombreMenu}</span>`;
+
+                        $("#UsuarioMenu").append(object);
+                    }
+                }
+
+            },
+            error: function (err) {
+                alertMessage(err.fail, "Error Obtener Menú del Usuario", "error");
+                console.log(err.fail());
+            }
+
+        });
+    });
+    </script>
+</body>
+
+</html>
+
+

@@ -1,0 +1,140 @@
+﻿
+@{
+    ViewBag.Title = "Facturas";
+}
+
+<div class="page-heading">
+    <div class="page-title">
+        <div class="row">
+            <div class="col-12 col-md-6 order-md-1 order-last">
+                <h3>Listado de @ViewBag.Title</h3>
+            </div>
+        </div>
+    </div>
+    <section class="section">
+        <div class="card">
+            <div class="card-header">
+                Lista de Clientes
+                
+                    
+                        <div class="float-end">
+                            <a href="@Url.Content("~/Facturar/CrearFactura")" class="btn btn-primary user-img d-flex align-items-center">
+                                @* <i class="bi bi-receipt-cutoff"></i>*@
+                                <i class="bi bi-book-fill"></i>
+                                <span> &emsp; Crear Nueva Factura </span>
+                            </a>
+                        </div>
+
+            </div>
+            <div class="card-body">
+                <table class="table table-dark table-striped" id="table1">
+                    <thead>
+                        <tr>
+                            <th>Ver</th>
+                            <th>N# </th>
+                            <th>Cédula/Ruc</th>
+                            <th>Cliente</th>
+                            <th>Fecha</th>
+                            <th>Total</th>
+                            <th>Iva/12%</th>
+                            <th>Empleado</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </section>
+</div>
+
+
+<script>
+    // Jquery Datatable
+    const table = $("#table1").DataTable({
+        "language": {
+            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+        },
+        data: [],
+        columns: [
+            { data: "ID" },
+            { data: "ID" },
+            { data: "CedRuc" },
+            { data: "Cliente" },
+            {
+                data: "Fecha", render: function (data) {
+                    if (data == null) {
+                        return data;
+                    }
+                    else {
+                        new_data = data.split("T");
+                        
+                        return new_data[0];
+                    }
+                }
+},
+            { data: "Total", render: $.fn.dataTable.render.number(',', '.', 2, '$ '), type: 'currency', className: 'dt-body-right' },
+            { data: "Iva", render: $.fn.dataTable.render.number(',', '.', 2, '$ '), type: 'currency', className: 'dt-body-right'},
+            { data: "Empleado" },
+        ], columnDefs: [
+            {
+                "targets": 8,
+                "data": null,
+                "render": function (data, type, row) {
+                    if (data.Estado == 1) {
+                        return `<span class="badge bg-info">Activo</span>`;
+                    }
+                    return `<span class="badge bg-danger">Inactivo</span>`
+                }
+            },
+            {
+                "targets": 0,
+                "data": null,
+                "render": function (data, type, row) {
+                    return `<button id="btnVerFactura" class="btn"> <i class="bi bi-eye-fill"></i></button>`;
+                }
+            }
+
+        ]
+    });
+
+
+
+
+
+    $(document).ready(function () {
+        CargarDatosTabla();
+        $('#table1 tbody').on('click', 'tr', function () {
+            var data = table.row(this).data();
+            var url = "@Url.Action("VerFactura", "Facturar", new { id="NumFac"})";
+            url = url.replace("NumFac", data.ID);
+            window.location.href = url;
+
+
+        });
+    });
+
+    function CargarDatosTabla() {
+        $.ajax({
+            method: 'POST',
+            url: "@Url.Content("~/Facturar/ListarFacturas")",
+            dataType: 'json',
+            success: function (data) {
+                if (data.Status != 200) {
+                    alertMessage(data.Error, "Error Listado Facturas", "error");
+                } else {
+                    table.clear().draw();
+                    table.rows.add(data.Data).draw();
+                }
+            },
+            error: function (err) {
+                alertMessage("Error", "Error Listado Facturas", "error");
+                console.log(err.fail());
+            }
+
+        });
+    }
+
+</script>

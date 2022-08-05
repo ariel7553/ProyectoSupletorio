@@ -1,0 +1,735 @@
+﻿
+@{
+    ViewBag.Title = "Crear Factura";
+}
+
+<div class="page-heading">
+    <div class="page-title">
+        <div class="row">
+            <div class="col-12 col-md-6 order-md-1 order-last">
+                <h3> @ViewBag.Title</h3>
+            </div>
+        </div>
+    </div>
+    <section class="section">
+        <div class="card">
+            <div class="card-header">
+
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                        <div class="text-center">
+                            <h3>Datos</h3>
+                        </div>
+                        <div style="background-color: dodgerblue">
+                            <div class="row text-center">
+                                <div class="col-6">
+                                    <h5 style="color: #ffffff"> Nombre</h5>
+                                </div>
+                                <div class="col-6">
+                                    <h5 style="color: #ffffff"> Dirección</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="row text-center">
+                                <div class="col-6">
+                                    <p style="color: #808080"> <b> Empresa XYZ </b> </p>
+                                </div>
+                                <div class="col-6">
+                                    <p style="color: #808080"> <b> Av.Chasquis y Victor Hugo </b> </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="background-color: dodgerblue">
+                            <div class="row text-center">
+                                <div class="col-12">
+                                    <h5 style="color: #ffffff"> Facturar A</h5>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="row mt-2">
+                                <form class="form form-horizontal">
+                                    <div class="form-body">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <label>Cliente</label>
+                                            </div>
+                                            <div class="col-md-9 form-group">
+                                                <label id="txtCliente"></label>
+                                                <div class="float-end">
+                                                    <a id="btnClientes" data-bs-toggle="modal" data-bs-target="#exampleModalCenter" class="btn user-img d-flex align-items-center">
+                                                        <i class="bi bi-people-fill"></i>
+                                                        <span> &emsp; Clientes </span>
+                                                    </a>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label>Teléfono</label>
+                                            </div>
+                                            <div class="col-md-9 form-group">
+                                                <label id="txtTelefono"></label>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label>Dirección</label>
+                                            </div>
+                                            <div class="col-md-9 form-group">
+                                                <label id="txtDireccion"></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-12 col-md-6">
+                        <div class="text-center">
+                            <h2>Factura</h2>
+                        </div>
+
+                        <div style="background-color: dodgerblue">
+                            <div class="row text-center">
+                                <div class="col-6">
+                                    <h5 style="color: #ffffff"> Factura Nº_ </h5>
+                                </div>
+                                <div class="col-6">
+                                    <h5 style="color: #ffffff"> Fecha</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="row text-center">
+                                <div class="col-6">
+                                    <p style="color: #808080"> <b> F0010- @ViewBag.idFactura </b> </p>
+                                </div>
+                                <div class="col-6">
+                                    <p style="color: #808080"> <b> @DateTime.Now.ToShortDateString() </b> </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="background-color: dodgerblue">
+                            <div class="row text-center">
+                                <div class="col-6">
+                                    <h5 style="color: #ffffff"> Cédula/RUC </h5>
+                                </div>
+                                <div class="col-6">
+                                    <h5 style="color: #ffffff"> Pago</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="row text-center">
+                                <div class="col-6">
+                                    <p style="color: #808080"> <b id="txtCed">  </b> </p>
+                                </div>
+                                <div class="col-6">
+                                    <p style="color: #808080"> <b> Efectivo </b> </p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col-12 col-sm-12">
+                        <div class="row g-3">
+                            <div class="col-md-2">
+                                <label for="txtProducto" class="form-label">Producto</label>
+                                <input type="text" disabled class="form-control" id="txtProducto">
+                            </div>
+                            <div class="col-md-2">
+                                <label for="txtPrecio" class="form-label">Precio</label>
+                                <input type="text" disabled class="form-control" id="txtPrecio">
+                            </div>
+                            <div class="col-md-2">
+                                <label for="txtStock" class="form-label">Stock</label>
+                                <input name="somename" class="form-control"
+                                       id="txtStock"
+                                       disabled />
+                            </div>
+                            <div class="col-md-3">
+                                <label for="txtCant" class="form-label">Cantidad</label>
+                                <input name="somename"
+                                       onkeypress="return event.charCode >= 48" min="1" class="form-control" id="txtCant"
+                                       oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                       type="number"
+                                       maxlength="6" />
+
+                                
+                            </div>
+                            <div class="col-md-3">
+                                <div class="float-end">
+
+                                    <a data-bs-toggle="modal" id="btnProductos" data-bs-target="#exampleModalCenterProductos" class="btn user-img d-flex">
+
+                                        <i class="bi bi-bookmark-x-fill"></i>
+                                        <span> &emsp; Productos </span>
+                                    </a>
+
+                                    <button id="btnAgregar" class="btn user-img d-flex align-items-center mt-4">
+                                        <i class="bi bi-plus-circle"></i>
+                                        <span> &emsp; Agregar </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr />
+
+            <div class="card-body">
+                <table class="table table-light table-striped table text-center" id="table1">
+                    <thead>
+                        <tr>
+                            <th>N# </th>
+                            <th>Descripción</th>
+                            <th>Cant.</th>
+                            <th>Precio U.</th>
+                            <th>Total</th>
+                            <th>Opcion</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+                <hr />
+                <div class="float-end">
+                    <div class="row mt-2 ">
+                        <form class="form form-horizontal">
+                            <div class="form-body">
+                                <div class="row text-end">
+                                    <div class="col-md-9">
+                                        <label>Subtotal</label>
+                                    </div>
+                                    <div class="col-md-3 form-group">
+                                        <label id="Subtotal"> </label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <label>IVA</label>
+                                    </div>
+                                    <div class="col-md-3 form-group">
+                                        <label id="Iva"></label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <label>Total</label>
+                                    </div>
+                                    <div class="col-md-3 form-group">
+                                        <label id="Total"></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <button id="btnGuardarFactura" class="btn btn-primary">Guardar Factura</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+</div>
+
+
+@* Modal *@
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-centered modal-dialog-scrollable modal-xl"
+         role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h5 class="modal-title " id="exampleModalCenterTitle">
+                    Cliente
+                </h5>
+
+                <button type="button" class="close" data-bs-dismiss="modal"
+                        aria-label="Close">
+                    <i data-feather="x"></i>
+                </button>
+            </div>
+
+            <div class="modal-body ">
+                <table width="100%" class="table table-hover table table-responsive-lg" id="tableCliente">
+                    <thead>
+                        <tr>
+                            <th>Cédula/Ruc</th>
+                            <th>Nombres</th>
+                            <th>Apellidos</th>
+                            <th>Teléfono</th>
+                            <th>Dirección</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger"
+                        data-bs-dismiss="modal">
+                    <i class="bx bx-x d-block d-sm-none"></i>
+                    <span class="d-none d-sm-block">Cancelar</span>
+                </button>
+
+            </div>
+        </div>
+    </div>
+</div>
+@* Fin Modal *@
+
+
+@* Modal *@
+<div class="modal fade" id="exampleModalCenterProductos" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-centered modal-dialog-scrollable modal-lg"
+         role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h5 class="modal-title " id="exampleModalCenterTitle">
+                    Productos
+                </h5>
+
+                <button type="button" class="close" data-bs-dismiss="modal"
+                        aria-label="Close">
+                    <i data-feather="x" class="bi bi-x-circle-fill"></i>
+                </button>
+            </div>
+
+            <div class="modal-body ">
+                <table width="100%" class="table table-hover table table-responsive-lg" id="tableProducto">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th class="dt-body-right">Precio</th>
+                            <th class="dt-body-right">Costo</th>
+                            <th>Stock</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger"
+                        data-bs-dismiss="modal">
+                    <i class="bx bx-x d-block d-sm-none"></i>
+                    <span class="d-none d-sm-block">Cancelar</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+@* Fin Modal *@
+
+
+<script>
+    // Jquery Datatable
+    let table = $("#table1").DataTable({
+        "ordering": false,
+        "searching": false,
+        "paging": false,
+        "info": false,
+        "language": {
+            "sProcessing": "Procesando...",
+            "sLengthMenu": "Mostrar _MENU_ registros",
+            "sZeroRecords": "No se encontraron resultados",
+            "sEmptyTable": "Agregue un Producto ",
+            "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+            "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+            "sInfoPostFix": "",
+            "sSearch": "Buscar:",
+            "sUrl": "",
+            "sInfoThousands": ",",
+            "sLoadingRecords": "Cargando...",
+            "oPaginate": {
+                "sFirst": "Primero",
+                "sLast": "Último",
+                "sNext": "Siguiente",
+                "sPrevious": "Anterior"
+            },
+            "oAria": {
+                "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+        "data": [],
+        "columnDefs": [
+            { "data": "Num", targets: 0, visible: false },
+            { "data": "Desc", targets: 1 },
+            { "data": "Cant", targets: 2 },
+            { "data": "Precio", targets: 3,  },
+            { "data": "Sub", targets: 4},
+            {
+                "data": null, targets: 5, render: function (data) {
+                    return `<button id="btnEditar" class="btn"> <i class="bi bi-pencil-square"></i> </button> <button id="btnEliminar" class="btn"> <i class="bi bi-trash-fill"></i> </button>  `;
+                }
+            }
+        ]
+
+    });
+    var productos = [];
+    var producto;
+    var datosTabla = [];
+    var prodEdit = null;
+    var cliente = null;
+    // Jquery Datatable
+    let tableCliente = $("#tableCliente").DataTable({
+        "language": {
+            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+        },
+        data :[],
+        columns: [
+            { data: "CedRuc" },
+            { data: "Nombres" },
+            { data: "Apellidos" },
+            { data: "Telefono" },
+            { data: "Direccion" }
+        ]
+    });
+    let tableProducto = $("#tableProducto").DataTable({
+        "language": {
+            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+        },
+        data: [],
+        columns: [
+            { data: "Nombre" },
+            { data: "Precio", render: $.fn.dataTable.render.number(',', '.', 2, '$ '), type: 'currency', className: '' },
+            { data: "Costo", render: $.fn.dataTable.render.number(',', '.', 2, '$ '), type: 'currency', className: '' },
+            { data: "Stock" },
+        ]
+    });
+
+    $(document).ready(function () {
+
+        $("#btnAgregar").attr('disabled', true);
+        $("#btnGuardarFactura").attr('disabled', true);
+        CargarDatosTabla();
+        CargarDatosTablaProducto();
+
+        $('#table1 tbody').on('click', '#btnEliminar', function () {
+            var data = table.row($(this).closest("tr")).data();
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger'
+                },
+                buttonsStyling: true
+            })
+
+            swalWithBootstrapButtons.fire({
+                title: 'Desea Borrar el Producto: ' + data.Desc,
+                text: "Click en Borrar para quitar el Producto ",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Borrar!',
+                cancelButtonText: 'Cancelar!',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+
+                    var aux = [];
+                    var subtotal = 0;
+                    for (var i = 0; i < datosTabla.length; i++) {
+                        if (datosTabla[i].ID_Pro != data.ID_Pro) {
+                            subtotal += datosTabla[i].Cant * datosTabla[i].Precio;
+                            aux.push(datosTabla[i]);
+
+                        }
+                    }
+
+                    if (aux.length <= 0) {
+                        $("#btnGuardarFactura").attr('disabled', true);
+                    }
+
+                    datosTabla = aux;
+                    var iva = subtotal * 0.12;
+                    var total = subtotal + parseFloat(iva);
+                    $("#Subtotal").text('$ ' + parseFloat(subtotal).toFixed(2));
+                    $("#Iva").text('$ ' + parseFloat(iva).toFixed(2));
+                    $("#Total").text('$' + parseFloat(total).toFixed(2));
+
+                    table.clear().draw();
+                    table.rows.add(datosTabla).draw();
+
+                    MessageSucces("Se Quito el Producto");
+                } else if (
+                              result.dismiss === Swal.DismissReason.cancel
+                ) {
+
+                }
+            })
+        });
+
+
+        $('#table1 tbody').on('click', '#btnEditar', function () {
+            prodEdit = table.row($(this).closest("tr")).data();
+            $('#exampleModalCenterProductos').modal('toggle');
+        });
+
+        $('#tableCliente tbody').on('click', 'tr', function () {
+            var data = tableCliente.row(this).data();
+            $("#txtCliente").text(data.Nombres + " " + data.Apellidos);
+            $("#txtCed").text(data.CedRuc);
+            $("#txtTelefono").text(data.Telefono);
+            $("#txtDireccion").text(data.Direccion);
+            $("#txtClinete").text(data.Nombres + " " + data.Apellidos);
+            $("#btnProductos").attr('disabled', false);
+            $("#exampleModalCenter").modal('toggle');
+            cliente = data;
+        });
+        $('#tableProducto tbody').on('click', 'tr', function () {
+            var data = tableProducto.row(this).data();
+            $('#exampleModalCenterProductos').modal('toggle');
+
+            if (prodEdit == null) {
+                producto = data;
+
+                $("#txtProducto").val(data.Nombre)
+                $("#txtStock").val(data.Stock)
+                $("#txtCant").val('')
+                $("#txtPrecio").val(parseFloat(data.Precio).toFixed(2));
+                $("#btnAgregar").attr('disabled', false);
+
+                $("#txtCant").focus();
+            } else {
+
+                for (var i = 0; i < datosTabla.length; i++) {
+                    if (datosTabla[i].ID_Pro == prodEdit.ID_Pro) {
+                        datosTabla[i].ID_Pro = parseInt(data.ID);
+                        datosTabla[i].Desc = data.Nombre;
+                        datosTabla[i].Precio = data.Precio;
+                        datosTabla[i].Sub = parseFloat(datosTabla[i].Cant) * parseFloat(data.Precio);
+                        break;
+                    }
+                }
+
+                var subtotal = 0;
+                for (var i = 0; i < datosTabla.length; i++) {
+                    subtotal += datosTabla[i].Cant * datosTabla[i].Precio;
+                }
+
+                var iva = subtotal * 0.12;
+                var total = subtotal + parseFloat(iva);
+                $("#Subtotal").text('$ ' + parseFloat(subtotal).toFixed(2));
+                $("#Iva").text('$ ' + parseFloat(iva).toFixed(2));
+                $("#Total").text('$' + parseFloat(total).toFixed(2));
+
+                table.clear().draw();
+                table.rows.add(datosTabla).draw();
+
+                $("#btnAgregar").attr('disabled', true);
+            }
+        });
+
+        $("#btnProductos").click(function () {
+            CargarDatosTablaProducto();
+        });
+        $("#btnClientes").click(function () {
+            CargarDatosTabla();
+        });
+
+        $("#btnAgregar").click(function () {
+
+            var cant = $("#txtCant").val();
+            if (cant <= 0) {
+                toastMessage("La cantidad debe ser mayor a cero");
+                $("#txtCant").focus();
+                return;
+            }
+
+            var add = 0;
+            if (cant > producto.Stock) {
+                toastMessage("Stock Disponible: " + producto.Stock + ", cambie la cantidad para agregar el producto");
+                $("#txtCant").focus();
+                return;
+            }
+
+            for (var i = 0; i < datosTabla.length; i++) {
+                if (datosTabla[i].ID_Pro == producto.ID) {
+
+                    if ((parseFloat(datosTabla[i].Cant) + parseFloat(cant)) > producto.Stock) {
+                        toastMessage("Stock Disponible: " + producto.Stock + ", cambie la cantidad para agregar el producto");
+                        $("#txtCant").focus();
+                        return;
+                    }
+                    datosTabla[i].Precio = producto.Precio;
+                    datosTabla[i].Cant = (parseFloat(datosTabla[i].Cant) + parseFloat(cant)).toFixed(2);
+                    datosTabla[i].Sub = (parseFloat(datosTabla[i].Cant) * parseFloat(producto.Precio)).toFixed(2);
+                    add = 1;
+                    break;
+                }
+            }
+
+
+            if (add==0) {
+                datosTabla.push({
+                    "Num": datosTabla.length + 1,
+                    "ID_Pro": parseInt(producto.ID),
+                    "Desc": producto.Nombre,
+                    "Cant": parseFloat(cant),
+                    "Precio": parseFloat(producto.Precio),
+                    "Sub": parseFloat(parseFloat(producto.Precio) * parseFloat(cant)).toFixed(2)
+                });
+            }
+
+            console.log(datosTabla)
+
+
+            var subtotal = 0;
+            for (var i = 0; i < datosTabla.length; i++) {
+                subtotal += (datosTabla[i].Cant * datosTabla[i].Precio).toFixed(2);
+            }
+
+            var iva = subtotal * 0.12;
+            var total = subtotal + parseFloat(iva);
+            $("#Subtotal").text('$ ' + parseFloat(subtotal).toFixed(2));
+            $("#Iva").text('$ ' + parseFloat(iva).toFixed(2));
+            $("#Total").text('$' + parseFloat(total).toFixed(2));
+
+            table.clear().draw();
+            table.rows.add(datosTabla).draw();
+            $("#btnGuardarFactura").attr('disabled', false);
+            $("#btnAgregar").attr('disabled', true);
+            $("#txtProducto").val('');
+            $("#txtPrecio").val('');
+            $("#txtCant").val('');
+            $("#txtStock").val('');
+
+        });
+
+        $("#btnGuardarFactura").click(function () {
+            if (cliente == null) {
+                toastMessage('Seleccione un cliente!!!');
+                return;
+            }
+
+            //console.log(datosTabla);
+            //datosTabla = datosTabla.forEach(function (e) {
+            //    e.Precio = e.Precio.replace('.', ',');
+            //    console.log(e)
+            //    return e;
+            //})
+
+
+            $.ajax({
+                method: 'POST',
+                url: "@Url.Content("~/Facturar/GuardarFactura")",
+                async: false,
+                dataType: 'json',
+                data: {
+                    "Cliente": cliente,
+                    "Detalle": datosTabla
+                },
+                success: function (data) {
+                    if (data.Status != 200) {
+                        alertMessage(data.Status + ": " + data.Error, "Error al Guardar la factura", "error");
+                    } else {
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'success',
+                            title: 'Registro Guardado',
+                            showConfirmButton: true,
+                            timer: 1500
+                        }).then((result) => {
+                            window.location = "@Url.Action("Index")"
+
+                        })
+                    }
+                },
+                error: function (err) {
+                    alertMessage("Ocurrio un error al Guardar Factura","Error","error");
+                    console.log(err.fail())
+                }
+            });
+            console.log(datosTabla);
+
+        });
+
+    });
+
+
+
+
+    function toastMessage(Mensaje) {
+        Toastify({
+            text: Mensaje,
+            duration: 4000,
+            close: true,
+            gravity: "top",
+            position: "center",
+            backgroundColor: "#ffce30",
+        }).showToast();
+    }
+
+    function MessageSucces(Mensaje) {
+        Toastify({
+            text: Mensaje,
+            duration: 3000,
+            close: true,
+            gravity: "top",
+            position: "center",
+            backgroundColor: "#1ee41c",
+        }).showToast();
+
+    }
+
+
+
+    function CargarDatosTabla() {
+        $.ajax({
+            method: 'POST',
+            url: "@Url.Content("~/Cliente/ListaClientesActivos")",
+            async: false,
+            dataType: 'json',
+            success: function (data) {
+                if (data.Status != 200) {
+                    alertMessage(data.Error, "Error Listado Clientes", "error");
+                } else {
+                    tableCliente.clear().draw();
+                    tableCliente.rows.add(data.Data).draw();
+
+                }
+            },
+            error: function (err) {
+                alertMessage("Error", "Error Listado Clientes", "error");
+                console.log(err.fail());
+            }
+
+        });
+    }
+
+    function CargarDatosTablaProducto() {
+        $.ajax({
+            method: 'POST',
+            url: "@Url.Content("~/Producto/ListaProductosActivos")",
+            dataType: 'json',
+            success: function (data) {
+                if (data.Status != 200) {
+                    alertMessage(data.Error, "Error Listado Productos", "error");
+                } else {
+
+                    tableProducto.clear().draw();
+                    tableProducto.rows.add(data.Data).draw();
+
+                }
+            },
+            error: function (err) {
+                alertMessage("Error", "Error Listado Productos", "error");
+                console.log(err.fail());
+            }
+
+        });
+    }
+</script>

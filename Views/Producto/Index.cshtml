@@ -1,0 +1,514 @@
+﻿
+
+@{
+    ViewBag.Title = "Productos";
+}
+
+
+<div class="page-heading">
+    <div class="page-title">
+        <div class="row">
+            <div class="col-12 col-md-6 order-md-1 order-last">
+                <h3>Listado de @ViewBag.Title</h3>
+
+            </div>
+        </div>
+    </div>
+    <section class="section">
+        <div class="card">
+            <div class="card-header">
+                Lista de @ViewBag.Title
+                @{
+                    if (User.IsInRole("Admin"))
+                    {
+                        <div class="float-end">
+                            <a data-bs-toggle="modal" data-bs-target="#exampleModalCenter" class="btn btn-primary user-img d-flex align-items-center">
+                                <i class="bi bi-bag-plus-fill"></i>
+                                <span> &emsp; Agregar </span>
+                            </a>
+                        </div>
+                    }
+                }
+
+            </div>
+
+
+            <div class="card-body">
+                <table class="table table-dark table-striped" id="table1">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th class="dt-body-right">Precio</th>
+                            <th class="dt-body-right">Costo</th>
+                            <th>Stock</th>
+                            <th>Estado</th>
+                            <th>Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </section>
+</div>
+
+
+@* Modal *@
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-centered modal-dialog-scrollable"
+         role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h5 class="modal-title " id="exampleModalCenterTitle">
+                    Nuevo Producto
+                </h5>
+                <button type="button" class="close" data-bs-dismiss="modal"
+                        aria-label="Close">
+                    <i data-feather="x"></i>
+                </button>
+            </div>
+
+            <div class="modal-body">
+
+                <div class="form-group position-relative has-icon-left">
+                    <input id="txtNom" type="text" placeholder="Nombre del Producto"
+                           class="form-control">
+                    <div class="form-control-icon">
+                        <i class="bi bi-bookmark-check"></i>
+                    </div>
+                </div>
+                <div class="form-group position-relative has-icon-left">
+
+                    <input id="txtPre" type="number" placeholder="Precio del Producto"
+                           class="form-control">
+                    <div class="form-control-icon">
+                        <i class="bi bi-cash"></i>
+                    </div>
+                </div>
+                <div class="form-group position-relative has-icon-left">
+
+                    <input id="txtCos" type="number" placeholder="Costo del Producto"
+                           class="form-control">
+                    <div class="form-control-icon">
+                        <i class="bi bi-cash"></i>
+                    </div>
+                </div>
+                <div class="form-group position-relative has-icon-left">
+
+                    <input name="txtStock"
+                           onkeypress="return event.charCode >= 48" min="1" class="form-control" id="txtStock"
+                           oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                           type="number"
+                           maxlength="6" />
+                    <div class="form-control-icon">
+                        <i class="bi bi-book-half"></i>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger"
+                        data-bs-dismiss="modal">
+                    <i class="bx bx-x d-block d-sm-none"></i>
+                    <span class="d-none d-sm-block">Cancelar</span>
+                </button>
+                <button type="button" onclick="GuardarProducto()" class="btn btn-success ml-1">
+                    <i class="bx bx-check d-block d-sm-none"></i>
+                    <span class="d-none d-sm-block">Guardar</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+@* Fin Modal *@
+
+@* Modal EDITAR *@
+<div class="modal fade" id="exampleModalCenterEditar" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-centered modal-dialog-scrollable"
+         role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h5 class="modal-title " id="exampleModalCenterTitle">
+                    Editar Producto
+                </h5>
+                <button type="button" class="close" data-bs-dismiss="modal"
+                        aria-label="Close">
+                    <i data-feather="x"></i>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="form-group position-relative has-icon-left">
+                    <input id="txtID" type="text" disabled placeholder="Id del Producto"
+                           class="form-control">
+                    <div class="form-control-icon">
+                        <i class="bi bi-bookmark-check"></i>
+                    </div>
+                </div>
+
+                <div class="form-group position-relative has-icon-left">
+                    <input id="txtNomE" type="text" placeholder="Nombre del Producto"
+                           class="form-control">
+                    <div class="form-control-icon">
+                        <i class="bi bi-bookmark-check"></i>
+                    </div>
+                </div>
+                <div class="form-group position-relative has-icon-left">
+                    <input id="txtPreE" type="number" placeholder="Precio del Producto"
+                           class="form-control">
+                    <div class="form-control-icon">
+                        <i class="bi bi-cash"></i>
+                    </div>
+                </div>
+                <div class="form-group position-relative has-icon-left">
+                    <input id="txtCosE" type="number" placeholder="Costo del Producto"
+                           class="form-control">
+                    <div class="form-control-icon">
+
+                        <i class="bi bi-cash"></i>
+                    </div>
+                </div>
+                <div class="form-group position-relative has-icon-left">
+
+                    <input name="txtStockE"
+                           onkeypress="return event.charCode >= 48" min="1" class="form-control" id="txtStockE"
+                           oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                           type="number"
+                           maxlength="6" />
+                    <div class="form-control-icon">
+                        <i class="bi bi-book-half"></i>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger"
+                        data-bs-dismiss="modal">
+                    <i class="bx bx-x d-block d-sm-none"></i>
+                    <span class="d-none d-sm-block">Cancelar</span>
+                </button>
+                <button type="button" onclick="EditarProducto()" class="btn btn-success ml-1">
+                    <i class="bx bx-check d-block d-sm-none"></i>
+                    <span class="d-none d-sm-block">Guardar</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+@* Fin Modal *@
+<script>
+    // Jquery Datatable
+    let table = $("#table1").DataTable({
+        "language": {
+            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+        },
+        data :[],
+        columns: [
+            { data: "Nombre" },
+            { data: "Precio", render: $.fn.dataTable.render.number(',', '.', 2, '$ '), type: 'currency', className: '' },
+            { data: "Costo", render: $.fn.dataTable.render.number(',', '.', 2, '$ '), type: 'currency', className: '' },
+            { data: "Stock" },
+        ], columnDefs: [
+            {
+                "targets": 4,
+                "data": null,
+                "render": function (data, type, row) {
+                    if (data.Estado == 1) {
+                        return `<span class="badge bg-info">Activo</span>`;
+                    }
+                    return `<span class="badge bg-danger">Inactivo</span>`
+                }
+
+            },
+            {
+                "targets": 5,
+                "data": null,
+                "render": function (data, type, row) {
+
+                    var role = '@User.IsInRole("Admin")'
+
+                    if ('@User.IsInRole("Admin")' == "True") {
+                        if (data.Estado == 1) {
+                            return `
+                         <a data-bs-toggle="modal" data-bs-target="#exampleModalCenterEditar" id='btnEditar' class="btn btn-danger "><span class="fa-fw select-all fas"></span></a>
+                        <button id="btnEliminar"  class="btn btn-danger "><span class="fa-fw select-all fas"></span></button>`
+
+                        } else {
+                            return `
+                         <a data-bs-toggle="modal" data-bs-target="#exampleModalCenterEditar" id='btnEditar' class="btn btn-danger "><span class="fa-fw select-all fas"></span></a>
+                        <button id="btnEliminar" disabled  class="btn btn-danger "><span class="fa-fw select-all fas"></span></button>`
+
+                        }
+                     }
+                    return `
+                         <button class="btn disabled" ><span class="fa-fw select-all fas"></span></button> <button class="btn disabled " ><span class="fa-fw select-all fas"></span></button>`
+                }
+            }
+
+        ]
+    });
+
+    function setTwoNumberDecimal(event) {
+        this.value = parseFloat(this.value).toFixed(2);
+    }
+
+    $(document).ready(function () {
+        $('#txtPre').mask('0000.00', { reverse: true });
+        $('#txtPreE').mask('0000.00', { reverse: true });
+        $('#txtCos').mask('0000.00', { reverse: true });
+        $('#txtCosE').mask('0000.00', { reverse: true });
+        CargarDatosTabla();
+
+        $('#table1 tbody').on('click', "#btnEditar", function () {
+            //let row = $(this).parents('tr')[0];
+            var data = table.row($(this).parents('tr')).data();
+            $("#txtNomE").val(data.Nombre);
+            $("#txtID").val(data.ID);
+
+            $("#txtPreE").val(data.Precio);
+            $("#txtCosE").val(data.Costo);
+            $("#txtStockE").val(data.Stock);
+
+
+        });
+        $('#table1 tbody').on('click', "#btnEliminar", function () {
+            //let row = $(this).parents('tr')[0];
+            var data = table.row($(this).parents('tr')).data();
+            //for row data
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger'
+                },
+                buttonsStyling: true
+            })
+
+            swalWithBootstrapButtons.fire({
+                title: 'Desea Borrar el Producto: ' + data.Nombre,
+                text: "Click en Borrar para quitar el Producto ",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Borrar!',
+                cancelButtonText: 'Cancelar!',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        method: 'POST',
+                        url: "@Url.Content("~/Producto/EliminarProducto")",
+                        dataType: 'json',
+                        data: {
+                            "id": data.ID
+                        },
+                        success: function (data) {
+                            if (data.Status != 200) {
+                                alertMessage(data.Error, "Error Al Eliminar Producto", "error");
+                            } else {
+                                MessageSucces("Producto Eliminado");
+                                CargarDatosTabla();
+                                $("#exampleModalCenterEditar").modal('hide');
+                                Limpiar();
+
+                            }
+                        },
+                        error: function (err) {
+                            alertMessage("Error", "Error Listado Productos", "error");
+                            console.log(err.fail());
+                        }
+                    });
+                } else if (
+                    result.dismiss === Swal.DismissReason.cancel
+                ) {
+
+                }
+            })
+        });
+
+    });
+
+
+    function CargarDatosTabla() {
+        $.ajax({
+            method: 'POST',
+            url: "@Url.Content("~/Producto/ListaProductos")",
+            dataType: 'json',
+            success: function (data) {
+                if (data.Status != 200) {
+                    alertMessage(data.Error, "Error Listado Productos", "error");
+                } else {
+                    table.clear().draw();
+                    table.rows.add(data.Data).draw();
+
+                }
+            },
+            error: function (err) {
+                alertMessage("Error", "Error Listado Productos", "error");
+                console.log(err.fail());
+            }
+
+        });
+    }
+
+    function EditarProducto() {
+
+        var id = $("#txtID").val();
+        var nom = $("#txtNomE").val();
+        if (nom == '') {
+            $("#txtNomE").focus();
+            toastMessage("Ingrese el Nombre de Producto");
+            return;
+        }
+        var pre = $("#txtPreE").val();
+        if (pre == '') {
+
+            toastMessage("Ingrese el Precio del producto");
+            $("#txtPreE").focus();
+            return;
+        }
+        var tel = $("#txtCosE").val();
+        if (tel == '') {
+            toastMessage("Ingrese el Costo del Producto");
+            $("#txtCosE").focus();
+            return;
+        }
+
+        var st = $("#txtStockE").val();
+        if (st == '') {
+            toastMessage("Ingrese el Stock del Producto");
+            $("#txtStockE").focus();
+            return;
+        }
+
+
+
+
+        $.ajax({
+            method: 'POST',
+            url: "@Url.Content("~/Producto/EditarProducto")",
+            dataType: 'json',
+            data: {
+                "id": id,
+                "nombre": nom,
+                "pre": parseFloat(pre),
+                "costo": parseFloat(tel),
+                "stock": st
+            },
+            success: function (data) {
+                if (data.Status != 200) {
+                    alertMessage(data.Error, "Error Al Editar Producto", "error");
+                } else {
+                    MessageSucces("Producto Guardado");
+                    CargarDatosTabla();
+                    $("#exampleModalCenterEditar").modal('hide');
+                    Limpiar();
+
+                }
+            },
+            error: function (err) {
+                alertMessage("Error", "Error Listado Productos", "error");
+                console.log(err.fail());
+            }
+        });
+
+    }
+
+    function GuardarProducto() {
+
+        var nom = $("#txtNom").val();
+        if (nom == '') {
+            $("#txtNom").focus();
+            toastMessage("Ingrese el Nombre de Producto");
+            return;
+        }
+        var pre = $("#txtPre").val();
+        if (pre == '') {
+
+            toastMessage("Ingrese el Precio del producto");
+            $("#txtPre").focus();
+            return;
+        }
+        var tel = $("#txtCos").val();
+        if (tel == '') {
+            toastMessage("Ingrese el Costo del Producto");
+            $("#txtCos").focus();
+            return;
+        }
+
+        var st = $("#txtStock").val();
+        if (st == '') {
+            toastMessage("Ingrese el Stock del Producto");
+            $("#txtStock").focus();
+            return;
+        }
+
+
+        $.ajax({
+            method: 'POST',
+            url: "@Url.Content("~/Producto/GuardarProducto")",
+            dataType: 'json',
+            data: {
+                "nombre": nom,
+                "pre": parseFloat(pre),
+                "costo": parseFloat(tel),
+                "stock": st
+            },
+            success: function (data) {
+                if (data.Status != 200) {
+                    alertMessage(data.Error, "Error Al Guardar Producto", "error");
+                } else {
+                    MessageSucces("Product");
+                    CargarDatosTabla();
+                    $("#exampleModalCenter").modal('hide');
+                    Limpiar();
+
+                }
+            },
+            error: function (err) {
+                alertMessage("Error", "Error Listado Productos", "error");
+                console.log(err.fail());
+            }
+        });
+
+    }
+
+    function Limpiar() {
+        $("#txtNom").val('');
+        $("#txtPre").val('');
+        $("#txtCos").val('');
+        $("#txtStock").val('');
+        
+    }
+
+
+    function toastMessage(Mensaje) {
+        Toastify({
+            text: Mensaje,
+            duration: 4000,
+            close: true,
+            gravity: "top",
+            position: "center",
+            backgroundColor: "#ffce30",
+        }).showToast();
+    }
+
+    function MessageSucces(Mensaje) {
+        Toastify({
+            text: Mensaje,
+            duration: 3000,
+            close: true,
+            gravity: "top",
+            position: "center",
+            backgroundColor: "#1ee41c",
+        }).showToast();
+
+    }
+
+
+
+</script>

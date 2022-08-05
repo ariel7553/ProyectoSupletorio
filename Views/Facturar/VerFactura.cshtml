@@ -1,0 +1,207 @@
+﻿@model FacturacionWeb.Models.Factura
+@{
+    ViewBag.Title = "Ver Factura";
+}
+
+
+<div class="page-heading">
+    <div class="page-title">
+        <div class="row">
+            <div class="col-12 col-md-6 order-md-1 order-last">
+                <h3> @ViewBag.Title</h3>
+            </div>
+        </div>
+    </div>
+    <section class="section">
+        <div class="card">
+            <div class="card-header">
+
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                        <div class="text-center">
+                            <h2>Empresa XYZ</h2>
+                        </div>
+
+                        <div style="background-color: #36353B">
+                            <div class="row text-center">
+                                <div class="col-6">
+                                    <h5 style="color: white"> Nombre</h5>
+                                </div>
+                                <div class="col-6">
+                                    <h5 style="color: white"> Dirección</h5>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="row text-center">
+                                <div class="col-6">
+                                    <p style="color: black"> <b> Empresa XYZ </b> </p>
+                                </div>
+                                <div class="col-6">
+                                    <p style="color: black"> <b> Av.Chasquis y Victor Hugo </b> </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="background-color: #36353B ">
+                            <div class="row text-center">
+                                <div class="col-12">
+                                    <h5 style="color: white"> Facturar A</h5>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="row mt-2">
+                                <form class="form form-horizontal">
+                                    <div class="form-body">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <label style="color: black">Cliente</label>
+                                            </div>
+                                            <div class="col-md-9 form-group">
+                                                <label style="color: black">@Model.Cliente.Nombres  @Model.Cliente.Apellidos</label>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label style="color: black">Teléfono</label>
+                                            </div>
+                                            <div class="col-md-9 form-group">
+                                                <label style="color: black">@Model.Cliente.Telefono</label>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label style="color: black">Dirección</label>
+                                            </div>
+                                            <div class="col-md-9 form-group">
+                                                <label style="color: black">@Model.Cliente.Direccion</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-12 col-md-6">
+                        <div class="text-center">
+                            <h2>Factura</h2>
+                        </div>
+
+                        <div style="background-color: #36353B">
+                            <div class="row text-center">
+                                <div class="col-6">
+                                    <h5 style="color: white"> Factura Nª </h5>
+                                </div>
+                                <div class="col-6">
+                                    <h5 style="color: white"> Fecha</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="row text-center">
+                                <div class="col-6">
+                                    <p style="color: black"> <b> F0010- @Model.ID </b> </p>
+                                </div>
+                                <div class="col-6">
+                                    <p style="color: black"> <b> @Model.Fecha </b> </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="background-color: #36353B">
+                            <div class="row text-center">
+                                <div class="col-6">
+                                    <h5 style="color: white"> Cédula/RUC </h5>
+                                </div>
+                                <div class="col-6">
+                                    <h5 style="color: white"> Pago</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="row text-center">
+                                <div class="col-6">
+                                    <p style="color: black"> <b> @Model.Cliente.CedRuc </b> </p>
+                                </div>
+                                <div class="col-6">
+                                    <p style="color: black"> <b> Efectivo </b> </p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            <hr />
+
+            <div class="card-body">
+                <table class="table table-dark table-striped table text-center" id="table1">
+                    <thead>
+                        <tr>
+                            <th>N# </th>
+                            <th>Código </th>
+                            <th>Descripción</th>
+                            <th>Cant.</th>
+                            <th>Precio U.</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            int i = 1;
+                            foreach (var item in Model.Detalle_Factura)
+                            {
+                                <tr>
+                                    <td> @i </td>
+                                    <td> @item.ID_Pro </td>
+                                    <td> @item.Producto.Nombre </td>
+                                    <td>$ @item.Cant </td>
+                                    <td>$ @item.Producto.Precio </td>
+                                    <td>$ @item.SubTotal </td>
+                                </tr>
+                                i++;
+                            }
+                        }
+
+                    </tbody>
+                </table>
+                <hr />
+                <div class="float-end">
+                    <div class="row mt-2 ">
+                        <form class="form form-horizontal">
+                            <div class="form-body">
+                                <div class="row text-end">
+                                    <div class="col-md-9">
+                                        <label style="color: black">Subtotal</label>
+                                    </div>
+                                    <div class="col-md-3 form-group">
+                                        <label style="color: black"> $   @ViewBag.Sub</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <label style="color: black">IVA</label>
+                                    </div>
+                                    <div class="col-md-3 form-group">
+                                        <label style="color: black">$ @Model.IVA</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <label style="color: black">Total</label>
+                                    </div>
+                                    <div class="col-md-3 form-group">
+                                        <label style="color: black">$ @Model.Total</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+
+    </section>
+</div>
